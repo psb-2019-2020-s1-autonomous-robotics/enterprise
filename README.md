@@ -24,7 +24,7 @@ A fully autonomous robot which moves around on it's own based on the surrounding
 
 
     robot.drive(100, 0)
-    while sensor1 or sensor2.distance() > 100:
+    while sensor1.distance() or sensor2.distance() > 100:
        wait(10)
     robot.stop()
 
