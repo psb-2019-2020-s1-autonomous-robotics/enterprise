@@ -4,42 +4,45 @@ A fully autonomous robot which moves around on it's own based on the surrounding
 
     #!/usr/bin/env pybricks-micropython
 
-    from pybricks import ev3brick as brick
-    from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
-                                    InfraredSensor, UltrasonicSensor, GyroSensor)
-    from pybricks.parameters import (Port, Stop, Direction, Button, Color,
-                                    SoundFile, ImageFile, Align)
-    from pybricks.tools import print, wait, StopWatch
-    from pybricks.robotics import DriveBase
+        from pybricks import ev3brick as brick
+        from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
+                                         InfraredSensor, UltrasonicSensor, GyroSensor)
+        from pybricks.parameters import (Port, Stop, Direction, Button, Color,
+                                      SoundFile, ImageFile, Align)
+        from pybricks.tools import print, wait, StopWatch
+        from pybricks.robotics import DriveBase
 
 
-    brick.sound.beep()
+        brick.sound.beep()
 
-    test_motor1 = Motor(Port.C)
-    test_motor2 = Motor(Port.A)
-    robot = DriveBase(test_motor1, test_motor2, 35, 114)
+        test_motor1 = Motor(Port.C)
+        test_motor2 = Motor(Port.A)
+        robot = DriveBase(test_motor1, test_motor2, 35, 114)
 
-    sensor1 = UltrasonicSensor(Port.S1)
-    sensor2 = UltrasonicSensor(Port.S3)
-    Csensor = ColorSensor(Port.S2)
+        Tsensor = TouchSensor(Port.S1)
+        Csensor = ColorSensor(Port.S2)
+        Csensor.mode='COL-REFLECT'
 
-    while True:
+        while not Tsensor.pressed():
+            wait(10)
 
-        robot.drive(100, 0)
-        while sensor1.distance() > 150 and sensor2.distance() > 150:
-            wait(5)
-       robot.stop()
+        while True:
 
-       Csensor.mode='COL-REFLECT'
+        color = Csensor.color()
+        print(color) 
 
-       print(Csensor.color()) 
-
-       while Csensor.color() < 5:
-            wait(5)
-           test_motor1.run(500)
-
-        while Csensor.color() > 5:
+        while color is not None and color < 5:
             wait(1)
             robot.drive(100, 0)
+            color = Csensor.color()
+            print(color) 
+
+        while color is not None and color >= 5:
+            wait(1)
+            test_motor1.run(500)
+            color = Csensor.color()
+            print(color) 
+
         
         brick.sound.beep(1000, 500)
+
