@@ -1,6 +1,6 @@
 # Enterprise Project
 
-A fully autonomous robot which moves around on it's own based on the surroundings.
+A line following robot with a button to start or stop it's programming.
 
     #!/usr/bin/env pybricks-micropython
 
