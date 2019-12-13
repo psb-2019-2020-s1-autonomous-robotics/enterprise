@@ -1,6 +1,6 @@
 # Enterprise Project
 
-A line following robot with a button to start or stop it's programming.
+A line following robot with a button to start or stop its programming.
 
     #!/usr/bin/env pybricks-micropython
 
